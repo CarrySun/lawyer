@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="myCtrl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <title>打官司</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/web.css">
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/angularjs/angular.min.js"></script>
+</head>
+
+<body>
+    <div class="col-sm-offset-4 col-sm-4" style="padding-top:50px;padding-bottom:50px">
+        <div ng-if="type == log">
+            <div class="modal-header" style="text-align: center;">
+                <span class="modal-title">
+                    <a style="font-size: 20px" id="log" ng-mouseover="changeType($event)">登陆</a>
+                    <span style="color: #ccc">&nbsp;|&nbsp;</span>
+                    <a style="font-size: 15px;" id="reg" ng-mouseover="changeType($event)">注册</a>
+                </span>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="user_phone">手机号</label>
+                        <input type="text" class="form-control" ng-model="logUser.user_phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="user_password">密码</label>
+                        <input type="password" class="form-control" ng-model="logUser.user_password">
+                    </div>
+                    <div style="text-align: center;">
+                        <button style="width: 100%;font-size: 20px" class="btn btn-success" ng-click="onLogUser($event)">登录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div ng-if="type == reg">
+            <div class="modal-header" style="text-align: center;">
+                <span class="modal-title">
+                    <a style="font-size: 15px" id="log" ng-mouseover="changeType($event)">登陆</a>
+                    <span style="color: #ccc">&nbsp;|&nbsp;</span>
+                    <a style="font-size: 20px;" id="reg" ng-mouseover="changeType($event)">注册</a>
+                </span>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>身份：</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="regType" ng-value="true" ng-model="userReg"> 公众
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="regType" ng-value="false" ng-model="userReg">律师
+                        </label>
+                    </div>
+                    <div ng-show="userReg">
+                        <div class="form-group">
+                            <label for="user_phone">手机号</label>
+                            <input type="text" class="form-control" ng-model="regUser.user_phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="user_password">密码</label>
+                            <input type="password" class="form-control" ng-model="regUser.user_password">
+                        </div>
+                        <div class="form-group">
+                            <label for="user_name">用户名</label>
+                            <input type="text" class="form-control" ng-model="regUser.user_name">
+                        </div>
+                        <div style="text-align: center;">
+                            <button style="width: 100%;font-size: 20px" class="btn btn-success" ng-click="onRegUser($event)">公众注册</button>
+                        </div>
+                    </div>
+                    <div ng-show="!userReg">
+                        <div class="form-group">
+                            <label for="lawyer_name">真实姓名</label>
+                            <input type="text" class="form-control" ng-model="regLawyer.lawyer_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyer_tel">手机号</label>
+                            <input type="text" class="form-control" ng-model="regLawyer.lawyer_tel">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyer_password">密码</label>
+                            <input type="password" class="form-control" ng-model="regLawyer.lawyer_password">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyer_major">专长</label>
+                            <input type="text" class="form-control" ng-model="regLawyer.lawyer_major">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyer_charternum">执业证号</label>
+                            <input type="text" class="form-control" ng-model="regLawyer.lawyer_charternum">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyer_charterloc">执业机构</label>
+                            <input type="text" class="form-control" ng-model="regLawyer.lawyer_charterloc">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyer_email">电子邮箱</label>
+                            <input type="email" class="form-control" ng-model="regLawyer.lawyer_email">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyer_place">地区</label>
+                            <input type="text" class="form-control" ng-model="regLawyer.lawyer_place">
+                        </div>
+                        <div class="form-group">
+                            <label for="lawyer_add">详细地址</label>
+                            <textarea type="text" class="form-control" ng-model="regLawyer.lawyer_add"></textarea>
+                        </div>
+                        <div style="text-align: center;">
+                            <button style="width: 100%;font-size: 20px" class="btn btn-warning" ng-click="onRegLawyer($event)">律师注册</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/javascripts/log.js "></script>
+</body>
+
+</html>

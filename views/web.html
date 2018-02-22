@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html ng-app="lawyer" ng-controller="lawyerCtrl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <title>法律咨询</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/web.css">
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/angularjs/angular.min.js"></script>
+</head>
+
+<body>
+    <script type="text/ng-template" id="place.html">
+        <div class="modal-header">
+            <span class="modal-title">
+                <span style="font-size: 25px">当前</span>
+            <span style="color: #ccc">&nbsp;|&nbsp;</span>
+            <span style="font-size: 18px;">{{selected.province}}</span>
+            </span>
+        </div>
+        <div class="modal-body">
+            <ul style="list-style: none">
+                <li ng-repeat="province in place.provinces">
+                    <a ng-click="selected.province = province" style="float: left;padding: 5px 10px;">{{ province }}</a>
+                </li>
+            </ul>
+            <div style="clear: both">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" ng-click="ok()">确定</button>
+            <button class="btn btn-danger" ng-click="cancel()">取消</button>
+        </div>
+    </script>
+    <script type="text/ng-template" id="info.html">
+        <div ng-repeat="x in info">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                {{x.lawyer_name}} 
+                <i style="color: #f75b47" ng-if=x.lawyer_vip>vip</i>  
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <p ng-if=x.lawyer_charterloc>
+                        <span style="color: #f75b47">执业机构:</span>
+                        <span>{{x.lawyer_charterloc}}</span>
+                    </p>
+                    <p ng-if=x.lawyer_major>
+                        <span style="color: #f75b47">专长:</span>
+                        <span>{{x.lawyer_major[0]}}</span>
+                    </p>
+                    <p ng-if=x.lawyer_charternum>
+                        <span style="color: #f75b47">执业证号:</span>
+                        <span>{{x.lawyer_charternum}}</span>
+                    </p>
+                    <p ng-if=x.lawyer_email>
+                        <span style="color: #f75b47">电子邮箱:</span>
+                        <span>{{x.lawyer_email}}</span>
+                    </p>
+                    <p ng-if=x.lawyer_add>
+                        <span style="color: #f75b47">地址:</span>
+                        <span>{{x.lawyer_add}}</span>
+                    </p>
+                    <p ng-if=x.lawyer_tel>
+                        <span style="color: #f75b47">联系方式:</span>
+                        <span>{{x.lawyer_tel}}</span>
+                    </p>
+                </div>
+                <div style="clear: both">
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="logOut.html">
+        <div class="modal-header" style="text-align: center;">
+            <span class="modal-title">
+                <span style="font-size: 25px">确认退出登录？</span>
+            </span>
+        </div>
+        <div class="modal-footer" style="text-align: center;">
+            <button class="btn btn-success" ng-click="ok()">确定</button>
+            <button class="btn btn-danger" ng-click="cancel()">取消</button>
+        </div>
+    </script>
+    <div id="head">
+        <div>
+            <!-- <span style="color: #66cc99;font-weight: 900;font-size: 14px;margin-right: 10px"></span> -->
+            <b>
+                <a href="/" style="color:#fff">法律咨询网</a>
+            </b>
+        </div>
+        <div ng-if=user.user_name ng-cloak>
+            欢迎您:
+            <a id="logUser">{{user.user_name}}</a>
+            <span style="border-right:solid #fff 1px"></span>&nbsp;
+            <a style="color: #fff" ng-click="logOut()">退出登录</a>
+        </div>
+        <div ng-if=! user.user_name ng-cloak>
+            <a href="/log?from=index" title="" id="log" style="color: #fff;font-weight: bold">登录</a>
+            <span style="border-right:solid #fff 1px"></span>&nbsp;
+            <a href="/log?from=index" title="" id="reg" style="color: #fff;font-weight: bold">注册</a>
+        </div>
+    </div>
+    <div id="nav_content">
+        <div id="nav_left" style="position:relative">
+            <img src="/images/logo.png" height="65px">
+            <div style="height: 65px;padding-top: 27px;position:absolute;right:0" ng-cloak>
+                <span id="place" style="font-size: 18px;">{{selected}}</span>
+                <a style="font-size: 10px;color: #676767" ng-click="openPlace()">
+                    [切换城市]
+                </a>
+            </div>
+        </div>
+        <div id="nav_right">
+            <div class="input-group">
+                <input type="text" id="searchText" class="form-control input-lg" style="border-color: #66cc99;box-shadow:none;" placeholder="WWW.51DAGUANSI.TOP">
+                <a class="input-group-addon btn" target="_blank" id="search" ng-click="search($event)" href="">&nbsp;站外搜索&nbsp;</a>
+            </div>
+        </div>
+        <div class="consult">
+            <a href="/topic" class="btn btn-warning btn-lg" style="font-weight: bold">
+                法律咨询&nbsp;
+                <i class="fa fa-commenting"></i>
+            </a>
+        </div>
+    </div>
+    <div id="contain">
+        <div class="sidebar left">
+            <div class="mainNavs">
+                <div class="menu_box">
+                    <div class="menu_main">
+                        <h2>民事类法律事务
+                            <i class="pull-right fa fa-angle-right" style="color:#c9cbce;margin-right: 10px" aria-hidden="true"></i>
+                        </h2>
+                        <a ng-click="queryLawyersByMajorAndPlace($event)">拆迁安置</a>
+                        <a ng-click="queryLawyersByMajorAndPlace($event)">债务追讨</a>
+                        <a ng-click="queryLawyersByMajorAndPlace($event)">医疗纠纷</a>
+                    </div>
+                    <div class="menu_sub dn" style="top:0px">
+                        <dl>
+                            <dt>
+                            </dt>
+                            <dd>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">拆迁安置</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">债务追讨</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">医疗纠纷</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">工伤赔偿</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">人身损害</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">保险理赔</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">新闻侵权</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">婚姻家庭</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">遗产继承</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">旅游纠纷</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">农村承包</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">消费权益</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">抵押担保</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">邮政储蓄</a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="menu_box">
+                    <div class="menu_main">
+                        <h2>经济类法律事务
+                            <i class="pull-right fa fa-angle-right" style="color:#c9cbce;margin-right: 10px" aria-hidden="true"></i>
+                        </h2>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">工程建筑</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">房产纠纷</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">招标投标</a>
+                    </div>
+                    <div class="menu_sub dn" style="top: 80px">
+                        <dl>
+                            <dt>
+                            </dt>
+                            <dd>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">工程建筑</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">房产纠纷</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">招标投标</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">水利电力</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">电信通讯</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">高新技术</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">知识产权</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">合伙联营</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">连锁加盟</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">个人独资</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">期货交易</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">金融证券</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">银行保险</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">广告宣传</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">经销代理</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">不当竞争</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">经济仲裁</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">污染损害</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">网络法律</a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="menu_box">
+                    <div class="menu_main">
+                        <h2>刑事行政法律事务
+                            <i class="pull-right fa fa-angle-right" style="color:#c9cbce;margin-right: 10px" aria-hidden="true"></i>
+                        </h2>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">取保候审</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">刑事辩护</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">刑事自诉</a>
+                    </div>
+                    <div class="menu_sub dn" style="top: 250px">
+                        <dl>
+                            <dt>
+                            </dt>
+                            <dd>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">取保候审</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">刑事辩护</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">刑事自诉</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">行政复议</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">行政诉讼</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">国家赔偿</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">求学教育</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">环境污染</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">工商税务</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">海关商检</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">公安国安</a>
+                                <a ng-click="queryLawyersByMajorAndPlace($event)">公司犯罪</a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="menu_box">
+                    <div class="menu_main">
+                        <h2>涉外法律事务
+                            <i class="pull-right fa fa-angle-right" style="color:#c9cbce;margin-right: 10px" aria-hidden="true"></i>
+                        </h2>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">海事海商</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">国际贸易</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">招商引资</a>
+                    </div>
+                    <div class="menu_sub dn" style="top: 375px">
+                        <dl>
+                            <dt>
+                            </dt>
+                            <dd>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">海事海商</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">国际贸易</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">招商引资</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">外商投资</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">合资合作</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">WTO事务</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">倾销补贴</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">涉外仲裁</a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="menu_box">
+                    <div class="menu_main">
+                        <h2>公司专项类法律事务
+                            <i class="pull-right fa fa-angle-right" style="color:#c9cbce;margin-right: 10px" aria-hidden="true"></i>
+                        </h2>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">公司收购</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">股份转让</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">企业改制</a>
+                    </div>
+                    <div class="menu_sub dn" style="top: 500px">
+                        <dl>
+                            <dt>
+                            </dt>
+                            <dd>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">公司收购</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">股份转让</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">企业改制</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">公司清算</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">破产解散</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">资产拍卖</a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="menu_box">
+                    <div class="menu_main">
+                        <h2>其他非诉讼法律事务
+                            <i class="pull-right fa fa-angle-right" style="color:#c9cbce;margin-right: 10px" aria-hidden="true"></i>
+                        </h2>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">工商查询</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">资信调查</a>
+                        <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">合同审查</a>
+                    </div>
+                    <div class="menu_sub dn" style="top: 625px">
+                        <dl>
+                            <dt>
+                            </dt>
+                            <dd>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">工商查询</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">资信调查</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">合同审查</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">调解谈判</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">常年顾问</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">私人律师</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">文书代理</a>
+                                <a href="#" ng-click="queryLawyersByMajorAndPlace($event)">移民留学</a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right" style="border:solid 1px #fafafa">
+            <div style="height: 40px;margin-bottom: 20px;background: #fafafa;
+            line-height: 40px;padding:0 10px;color: #000;font-size: 18px;display: flex;flex-direction: row;justify-content: space-between; ">
+                <div>专长:
+                    <b id="major" style="font-size: 18px;color: #66cc99">全部</b>
+                </div>
+                <div>共:
+                    <b id="totle" style="font-size: 18px;color: #66cc99"></b>条</div>
+            </div>
+            <ul id="lvshi " ng-cloak style="padding:0 20px; ">
+                <!-- track by $index -->
+                <li ng-repeat="x in lawyer track by $index ">
+                    <div>
+                        <p>
+                            <a href="# " class="lawyer_name " ng-click="openInfo(x) ">{{x.lawyer_name}}</a>
+                        </p>
+                        <p ng-if=x.lawyer_charterloc>
+                            <span style="color: #f75b47 ">执业机构:</span>
+                            <span class="lawyer_charterloc ">{{x.lawyer_charterloc}}</span>
+                        </p>
+                        <p ng-if=x.lawyer_major>
+                            <span style="color: #f75b47 ">专长:</span>
+                            <span class="lawyer_major " style=" ">{{x.lawyer_major[0]}}</span>
+                        </p>
+                        <p style="color: #aaa;font-size: 14px ">
+                            <i class="fa fa-eye " aria-hidden="true "></i>
+                            <span class="lawyer_clickrate ">{{x.lawyer_clickrate}}</span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <tm-pagination conf="paginationConf "></tm-pagination>
+        </div>
+        <div style="clear: both;text-align: center;color: #dadada ">
+            <!-- <hr/> -->
+            <!-- <p>©2017 51DAGUANSI 京ICP备14023790号-2 京公网安备11010802017116号</p> -->
+        </div>
+    </div>
+    <script type="text/javascript " src="/javascripts/page.js "></script>
+    <script type="text/javascript " src="/javascripts/ui-bootstrap-tpls-0.11.2.js "></script>
+    <script src="/javascripts/web.js "></script>
+</body>
+
+</html>

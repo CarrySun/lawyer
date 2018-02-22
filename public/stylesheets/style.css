@@ -1,0 +1,139 @@
+/*　　@media screen and (max-width:1024px) {.page{width:750px;}}
+　　@media screen and (min-width:1025px) and (max-width:1280px) {.page{width:90%;}}
+　　@media screen and (min-width:1281px) and (max-width:1440px) {.page {width:92%;}}
+　　@media screen and (min-width:1441px) and (max-width:1920px) {.page{width:94%;}}
+　　@media screen and (min-width:1921px) and (max-width:2560px) {.page {width:96%;}}
+　　@media screen and (min-width:2561px) and (max-width:3328px) {.page {width:97%;}}
+　　@media screen and (min-width:3329px) {.page {width:98%;}}*/
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    color: #333;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+body::-webkit-scrollbar {display:none}
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+p{
+    margin-bottom:5px;
+}
+
+a {
+    color: #555;
+    background-color: transparent;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:active {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:visited {
+    text-decoration: none;
+    cursor: pointer;
+}
+textarea{
+    resize:none;
+    /* overflow: hidden */
+}
+tbody tr{
+}
+.btn:active,
+.btn:focus,
+.btn:hover {
+    outline: none;
+}
+.page{
+    width: 750px;
+}
+.pagination>li>span:hover{
+    background: #66cc99;
+    color: #fff;
+}
+/*.pagination>li:first-child>a, .pagination>li:first-child>span{
+    border-radius: 0
+}
+.pagination>li:last-child>a, .pagination>li:last-child>span{
+    border-radius: 0
+}*/
+.page-list {
+    /*padding-left: 50px;*/
+    text-align: center;
+    /*border: solid;*/
+}
+
+.page-list .pagination {
+    /*float: left;*/
+}
+
+.page-list .pagination span {
+    cursor: pointer;
+}
+
+.page-list .pagination .separate span {
+    cursor: default;
+    border-top: none;
+    border-bottom: none;
+}
+
+.page-list .pagination .separate span:hover {
+    background: none;
+}
+
+.page-list .page-total {
+    float: left;
+    margin: 25px 20px;
+}
+
+.page-list .page-total input,
+.page-list .page-total select {
+    height: 26px;
+    border: 1px solid #ddd;
+}
+
+.page-list .page-total input {
+    width: 40px;
+    padding-left: 3px;
+}
+
+.page-list .page-total select {
+    width: 50px;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #66cc99;
+    border-color: #66cc99;
+}
+
+.pagination>li>a,
+.pagination>li>span {
+    color: #66cc99;
+    /*padding:2px 12px;*/
+}
+.page-total{
+    display: none
+}
+#logUser{
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+}

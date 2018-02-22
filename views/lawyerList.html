@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html ng-app="lawyer" ng-controller="lawyerCtrl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <title>打官司</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/angularjs/angular.min.js"></script>
+
+    <!--CUSTOM BASIC STYLES-->
+    <link href="/stylesheets/basic.css" rel="stylesheet" />
+    <!--CUSTOM MAIN STYLES-->
+    <link href="/stylesheets/custom.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+        <script type="text/ng-template" id="logOut.html">
+            <div class="modal-header" style="text-align: center;">
+                <span class="modal-title">
+                    <span style="font-size: 25px">确认退出登录？</span>
+                </span>
+            </div>
+            <div class="modal-footer" style="text-align: center;">
+                <button class="btn btn-success" ng-click="ok()">确定</button>
+                <button class="btn btn-danger" ng-click="cancel()">取消</button>
+            </div>
+        </script>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">律师咨询网</a>
+            </div>
+
+            <div class="header-right">
+                    <a href="#" ng-click="logOut()" class="btn btn-info">
+                        <b>退出登录 </b>
+                        <i class="fa fa-sign-out"></i>
+                    </a>
+                </div>
+        </nav>
+        <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <div style="background-color:grey;padding:10px">
+                            <div class="inner-text" style="color:#fff">
+                                管理员：{{admin.admin_name}}
+                                <br />
+                            </div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <a href="/admin">
+                            <i class="fa fa-dashboard "></i>首页</a>
+                    </li>
+                    <li>
+                        <a class="active-menu" href="#">
+                            <i class="fa fa-bicycle "></i>律师管理
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="/lawyerList">
+                                    <i class="fa fa-list "></i>律师列表</a>
+                            </li>
+                            <li>
+                                <a href="/lawyerManage">
+                                    <i class="fa fa-edit "></i>律师审核</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/userList">
+                            <i class="fa fa-dashboard "></i>用户列表</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>律师列表
+                            <span style="font-size: 18px;position:absolute;right:15px;top：10px">
+                                共:
+                                <b id="totle" style="font-size: 18px;color: #66cc99"></b>条
+                            </span>
+                        </h2>
+
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <!-- <div class="row"> -->
+                <table class="row table table-striped" style="margin:0;padding:0">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>姓名</th>
+                            <th>密码</th>
+                            <th>执业证号</th>
+                            <th>执业机构</th>
+                            <th>专长</th>
+                            <th>地址</th>
+                            <th>邮箱</th>
+                            <th>联系方式</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-cloak ng-repeat="x in lawyer track by $index">
+                            <td>{{$index+1}}</td>
+                            <td>{{x.lawyer_name}}</td>
+                            <td>{{x.lawyer_password}}</td>
+                            <td>{{x.lawyer_charternum}}</td>
+                            <td>{{x.lawyer_charterloc}}</td>
+                            <td>{{x.lawyer_major}}</td>
+                            <td>{{x.lawyer_add}}</td>
+                            <td>{{x.lawyer_email}}</td>
+                            <td>{{x.lawyer_tel}}</td>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+                <tm-pagination conf="paginationConf "></tm-pagination>
+
+                <!-- </div> -->
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+
+    <div id="footer-sec">
+        Copyright &copy; 2016.Company name All rights reserved.More Templates
+    </div>
+    <script src="/javascripts/jquery.metisMenu.js"></script>
+    <script src="/javascripts/custom.js"></script>
+    <script type="text/javascript " src="/javascripts/page.js "></script>
+    <script type="text/javascript " src="/javascripts/ui-bootstrap-tpls-0.11.2.js "></script>
+    <script src="/javascripts/lawyerList.js"></script>
+
+</body>
+
+</html>

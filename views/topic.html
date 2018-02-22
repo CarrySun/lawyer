@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="topic" ng-controller="topicCtrl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <title>打官司</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/web.css">
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/angularjs/angular.min.js"></script>
+    <script src="/moment/min/moment.min.js"></script>
+    <script src="/angular-moment/angular-moment.js"></script>
+    <style>
+        tr:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/ng-template" id="logOut.html">
+        <div class="modal-header" style="text-align: center;">
+            <span class="modal-title">
+                <span style="font-size: 25px">确认退出登录？</span>
+            </span>
+        </div>
+        <div class="modal-footer" style="text-align: center;">
+            <button class="btn btn-success" ng-click="ok()">确定</button>
+            <button class="btn btn-danger" ng-click="cancel()">取消</button>
+        </div>
+    </script>
+    <div id="head">
+        <div>
+            <b>
+                <a href="/" style="color:#fff">法律咨询网</a>
+            </b>
+        </div>
+        <div ng-if=user.user_name ng-cloak>
+            欢迎您:
+            <a id="logUser">{{user.user_name}}</a>
+            <span style="border-right:solid #fff 1px"></span>&nbsp;
+            <a style="color: #fff" ng-click="logOut()">退出登录</a>
+        </div>
+        <div ng-if=!user.user_name ng-cloak>
+            <a href="/log?from=topic" title="" id="log" style="color: #fff;font-weight: bold" ng-click="openLog($event)">登录</a>
+            <span style="border-right:solid #fff 1px"></span>&nbsp;
+            <a href="/log?from=topic" title="" id="reg" style="color: #fff;font-weight: bold" ng-click="openLog($event)">注册</a>
+        </div>
+    </div>
+    <div style="padding-top:20px" class="col-lg-offset-2 col-lg-8">
+        <div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <textarea style="height:200px" class="form-control" placeholder="请在这里描述您遇到的问题" ng-model="topicContent"></textarea>
+                    </div>
+                </div>
+                <div style="text-align:right;margin-bottom:20px">
+                    <button class="btn btn-default" ng-click="addTopic($event)">提交</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-sm-12" style="border:solid 1px #fafafa;padding-left:0;padding-right:0;">
+            <div style="height: 40px;margin-bottom: 20px;background: #fafafa;line-height: 40px;padding:0 10px;color: #000;font-size: 18px;display: flex;flex-direction: row;justify-content: space-between; ">
+                <div>热门资讯:</div>
+                <div>共:
+                    <b id="totle" style="font-size: 18px;color: #66cc99"></b>条
+                </div>
+            </div>
+            <table class="table  table-striped">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>内容</th>
+                        <th>作者</th>
+                        <th>回复</th>
+                        <th>发帖时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-cloak ng-repeat="x in topic track by $index" ng-click="toReply(x)">
+                        <td>{{$index+1}}</td>
+                        <td style="max-width:500px;" class="col-sm-7">{{x.topic_content.substr(0,70)}}</td>
+                        <td class="col-sm-2">{{x.topic_userId}}</td>
+                        <td class="col-sm-1">{{x.topic_replyNumber}}</td>
+                        <td class="col-sm-2">{{x.topic_time| amDateFormat:'YYYY-MM-DD HH:mm:ss'}}</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+            <tm-pagination conf="paginationConf "></tm-pagination>
+        </div>
+        <div style="clear: both;text-align: center;color: #dadada ">
+            <!-- <hr/> -->
+            <!-- <p>©2017 51DAGUANSI 京ICP备14023790号-2 京公网安备11010802017116号</p> -->
+        </div>
+    </div>
+    <script type="text/javascript " src="/javascripts/page.js "></script>
+    <script type="text/javascript " src="/javascripts/ui-bootstrap-tpls-0.11.2.js "></script>
+    <script src="/javascripts/topic.js "></script>
+</body>
+
+</html>

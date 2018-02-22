@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="log" ng-controller="logCtrl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+    <title>打官司</title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/web.css">
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/angularjs/angular.min.js"></script>
+</head>
+
+<body>
+    <div class="col-sm-offset-7 col-sm-3" style="margin-top:200px">
+        <form>
+            <div class="form-group">
+                <label for="admin_name">用户名</label>
+                <input type="text" class="form-control" ng-model="logAdmin.admin_name">
+            </div>
+            <div class="form-group">
+                <label for="admin_password">密码</label>
+                <input type="password" class="form-control" ng-model="logAdmin.admin_password">
+            </div>
+            <div style="text-align: center;">
+                <button style="width: 100%;font-size: 20px" class="btn btn-success" ng-click="onLogAdmin($event)">管理员登录</button>
+            </div>
+        </form>
+    </div>
+    <script src="/javascripts/adminLog.js "></script>
+</body>
+
+</html>

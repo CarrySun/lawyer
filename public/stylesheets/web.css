@@ -1,0 +1,165 @@
+#head{ 
+    background-color: #000;
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    min-width: 1020px;
+    flex-direction:row;
+    justify-content: space-between;
+    padding: 0 20px; 
+}
+#nav_content{
+    min-width: 1020px;
+    background: #fafafa;
+    margin-bottom: 30px;
+    height: 75px;
+    display: flex;
+    flex-direction:row; 
+    justify-content: center;
+    align-items: center;
+}
+#nav_left{
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+}
+#nav_right{
+    width: 650px;
+    margin:0 50px;
+}
+.consult{
+    position: relative;
+}
+@keyframes myfirst
+{
+0%   {top:0px;}
+50%  {top:5px;}
+100% {top:0px;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+0%   {top:0px;}
+50%  {top:5px;}
+100% {top:0px;}
+}
+
+@-webkit-keyframes myfirst /* Safari 和 Chrome */
+{
+0%   {top:0px;}
+50%  {top:5px;}
+100% {top:0px;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+0%   {top:0px;}
+50%  {top:5px;}
+100% {top:0px;}
+}
+.fa-commenting{
+    position: absolute;
+    top:0px;
+    right:  0px;
+    color: #fff;
+    animation:myfirst 1s;
+    -moz-animation:myfirst 1s; /* Firefox */
+    -webkit-animation:myfirst 1s; /* Safari and Chrome */
+    -o-animation:myfirst 1s; /* Opera */
+    animation-iteration-count:infinite;
+
+}
+#search{
+    background: #66cc99;
+    border-color: #66cc99;
+    color:#fff;
+    border-radius:0 8px 8px 0 ;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#contain{
+    min-width: 1020px;
+    /*border:solid;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+/*right*/
+.right{
+    width: 750px;
+    margin-left: 50px;
+}
+#lvshi{
+    padding:0 20px;
+}
+#lvshi > li{
+    /*border-bottom: solid #fafafa;*/
+    padding:15px 30px;
+}
+.lawyer_name{
+    font-size: 20px;
+    color: #00b38a
+}
+/*left*/
+.left{
+    width: 220px;
+}
+.sidebar {
+    z-index: 101;
+    position: relative;
+}
+.sidebar .mainNavs {
+    background: #fafafa;
+}
+.sidebar .menu_main {
+    border: 2px solid #fafafa;
+    border-right:0 ;
+    padding: 6px 6px;
+    overflow: hidden;
+    position: relative;
+}
+.menu_main.current {
+    background: #fff;
+    border: 2px solid #c9cbce;
+    border-right: 0;
+    z-index: 102;
+}
+.sidebar .menu_main h2 {
+    margin: 15px 0;
+    font-size: 18px;
+    padding-left: 8px;
+    font-weight: 500;
+}
+.sidebar .menu_main a {
+    float: left;
+    white-space: nowrap;
+    margin: 0 10px 10px 0;
+    padding-left:8px;
+}
+.sidebar .menu_main a:hover{
+    color: #66cc99;
+} 
+.sidebar .menu_sub {
+    width: 380px;
+    padding: 25px 20px;
+    position: absolute;
+    left: 100%;
+    margin-left:-2px;
+    z-index: 100;
+    border: 2px solid #c9cbce;
+    background: #fff;
+}
+.dn {
+    display: none;
+}
+.sidebar .menu_sub a {
+    float: left;
+    white-space: nowrap;
+    margin: 10px 10px;
+    padding-left:8px;
+}
+.sidebar .menu_sub a:hover {
+    color:#66cc99;
+}
