@@ -8,6 +8,12 @@ var cheerio = require('cheerio');
 var request = require('request');
 var async = require('async');
 var Lawyer = require('./models/lawyer')
+var Admin = require('./models/admin')
+var admin = new Admin({
+  admin_name: "admin",
+  admin_password:'admin'
+});
+admin.save()
 var baseUrl = "http://lawyer.110.com/lawyer/class/cid/";
 var pageUrl = 'http://lawyer.110.com/lawyer/class/cid/1/p/';
 var lawyerUrlArr = [];

@@ -173,7 +173,7 @@ module.exports = {
         function(err, data) {
           if (data) {
             data.topic_replyId.push(reply_id);
-            console.log(data);
+            // console.log(data);
             topic = data.save();
           }
         }
@@ -185,7 +185,7 @@ module.exports = {
         reply_time: replyObj.reply_time
       };
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       resMap.tip = "出错啦";
       resMap.data = e;
     }
