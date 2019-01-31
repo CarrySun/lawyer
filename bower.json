@@ -10,12 +10,12 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests" 
   ],
   "dependencies": {
     "bootstrap": "boostrap#^3.3.7",
     "font-awesome": "^4.7.0",
-    "angular": "angularjs#^1.6.4",
+    "angular": "1.4.2",
     "moment": "^2.20.1",
     "angular-moment": "^1.2.0"
   }
